@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Comments Form</title>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <h1>Add Your Comment</h1>
+    <form id="commentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" required></textarea><br><br>
+        
+        <input type="submit" value="Submit Comment">
+    </form>
 </body>
 </html>
