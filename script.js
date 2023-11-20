@@ -1,25 +1,48 @@
-<script>
-document.getElementById("commentForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const formData = new FormData(this);
+function submitComment() {
+    var xhr = new XMLHttpRequest();
+    var formData = new FormData(document.getElementById("commentForm"));
 
-    // Send the formData to the server using AJAX
-    // Example: You can use the Fetch API or jQuery.ajax
-    fetch("/submit_comment.php", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Comment submitted successfully!");
-            // You can update the page or display a success message
-        } else {
-            alert("Error submitting comment. Please try again.");
+    xhr.open("POST", "submit_comment.php", true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            document.getElementById("commentsList").innerHTML = this.responseText;
+            document.getElementById("commentForm").reset();
+            updateCommentsStyle(); // Update styles after submitting a comment
         }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
+    }
+    xhr.send(formData);
+    return false; // Prevent page refresh
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "submit_comment.php", true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            document.getElementById("commentsList").innerHTML = this.responseText;
+            updateCommentsStyle(); // Update styles after initial page load
+        }
+    }
+    xhr.send();
 });
-</script>
+
+
+function hashStringToColor(str) {
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    var color = '#';
+    for (var i = 0; i < 3; i++) {
+        var value = (hash >> (i * 8)) & 0xFF;
+        color += ('00' + value.toString(16)).substr(-2);
+    }
+    return color;
+}
+
+function updateCommentsStyle() {
+    document.querySelectorAll('.comment .name').forEach(function(elem) {
+        var name = elem.parentNode.querySelector('.time').getAttribute('data-name');
+        elem.style.color = hashStringToColor(name);
+    });
+}

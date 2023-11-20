@@ -1,0 +1,71 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+}
+
+.form-container, .comments-container {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin: 10px;
+}
+
+.form-container {
+    max-width: 40%;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.comment .time {
+    color: grey;
+    margin-right: 10px;
+}
+
+.comment .name {
+    margin-right: 5px;
+}
+
+.comment-text {
+    display: inline-block;
+    text-indent: -1em;
+    margin-left: 1em;
+}
+
+.comments-container {
+    max-width: 60%;
+}
+
+#commentsList {
+    height: 300px;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

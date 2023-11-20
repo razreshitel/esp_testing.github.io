@@ -1,0 +1,10 @@
+<div class='comment'><span class='time' data-name='1313'>20.11.23 23:42</span> <strong class='name'>1313</strong>: <span class='comment-text'>13</span></div>
+<div class='comment'><span class='time' data-name='hui hui'>20.11.23 23:43</span> <strong class='name'>hui hui</strong>: <span class='comment-text'>123</span></div>
+<div class='comment'><span class='time' data-name='hui hui'>20.11.23 23:43</span> <strong class='name'>hui hui</strong>: <span class='comment-text'>1312</span></div>
+<div class='comment'><span class='time' data-name='sasha'>20.11.23 23:45</span> <strong class='name'>sasha</strong>: <span class='comment-text'>123</span></div>
+<div class='comment'><span class='time' data-name='1'>20.11.23 23:45</span> <strong class='name'>1</strong>: <span class='comment-text'>13123<br />
+13<br />
+1<br />
+3<br />
+13<br />
+13</span></div>
