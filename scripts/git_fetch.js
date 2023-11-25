@@ -1,4 +1,4 @@
-document.getElementById('update-repo').addEventListener('click', function() {
+document.getElementById('update-repo-btn').addEventListener('click', function() {
     var password = prompt("Please enter the password:");
     if (password != null) {
         var xhr = new XMLHttpRequest();

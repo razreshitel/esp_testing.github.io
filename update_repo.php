@@ -1,5 +1,5 @@
 <?php
-$stored_hash = '6a30f630de10757c2efcde448c91d09746a44b6be1688992634996f76955a21f';
+$stored_hash = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (hash('sha256', $_POST['password']) === $stored_hash) {

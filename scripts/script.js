@@ -103,9 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var tableData = getTableData();
     sendData(tableData);
   });
-  
-  
-
 
   // Function to fetch CSV data with a cache-busting URL parameter
   function fetchCSVAndUpdateTable(csvFilePath, tableElementId) {
@@ -122,8 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Fetch and populate the tables
-  fetchCSVAndUpdateTable('sensors.csv', 'sensor-table');
-  fetchCSVAndUpdateTable('utilities.csv', 'utilities-table');
-  fetchCSVAndUpdateTable('security.csv', 'security-table');
-  fetchCSVAndUpdateTable('to-do.csv', 'todo-table'); // Add this line for the to-do list
+  fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
+  fetchCSVAndUpdateTable('data/utilities.csv', 'utilities-table');
+  fetchCSVAndUpdateTable('data/security.csv', 'security-table');
+  fetchCSVAndUpdateTable('data/to-do.csv', 'todo-table'); // Add this line for the to-do list
 });

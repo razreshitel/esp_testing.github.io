@@ -89,11 +89,22 @@ button:hover {
   color: white;
 }
 
-#git-command-btn {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  /* Add more styling as needed */
+#update-repo-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 50px; /* Square shape */
+    height: 50px;
+    border-radius: 10px; /* Rounded corners */
+    border: none; /* Removes default border */
+    background-color: #007bff; /* Background color */
+    padding: 0; /* Removes default padding */
+    cursor: pointer; /* Hand cursor on hover */
+}
+
+#update-repo-btn img {
+    width: 100%; /* Icon takes the full size of the button */
+    height: auto; /* Maintain aspect ratio */
 }
 
 #sensor-table, #utilities-table, #security-table, #todo-table {
