@@ -1,10 +1,10 @@
 document.getElementById('update-repo-btn').addEventListener('click', function() {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "scripts/last_update_time.php", true); // Request to get the last update time
+    xhr.open("GET", "scripts/update_repo.php", true); // Request to get the last update time
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var lastUpdateTime = this.responseText; // Response contains the last update time
-            var password = prompt("Please enter the password:\nLast update was on " + lastUpdateTime);
+            var password = prompt("Please enter the password:\n" + lastUpdateTime);
             if (password != null) {
                 var updateXhr = new XMLHttpRequest();
                 updateXhr.open("POST", "scripts/update_repo.php", true);
