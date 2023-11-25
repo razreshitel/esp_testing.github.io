@@ -91,16 +91,39 @@ button:hover {
 
 #update-repo-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 40px;
+    right: 40px;
     width: 50px; /* Square shape */
     height: 50px;
     border-radius: 10px; /* Rounded corners */
     border: none; /* Removes default border */
-    background-color: #007bff; /* Background color */
+    background-color: grey; /* Grey background */
     padding: 0; /* Removes default padding */
     cursor: pointer; /* Hand cursor on hover */
+    box-shadow: 4px -4px 8px 2px rgba(0, 0, 0, 0.4); /* Adds shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+#update-repo-btn img {
+    max-width: 80%; /* Limits the size of the icon */
+    max-height: 80%; /* Maintains aspect ratio and limits height */
+}
+
+#update-repo-btn .under-button-text {
+    position: absolute;
+    width: max-content; /* Adjust the width based on content */
+    top: 60px; /* Position below the button; adjust as needed */
+    left: 50%; /* Start from the center of the button */
+    transform: translateX(-50%); /* Shift it back to the left by half of its width */
+    color: black;
+    font-size: 18px;
+    text-align: center;
+}
+
+
 
 #update-repo-btn img {
     width: 100%; /* Icon takes the full size of the button */
