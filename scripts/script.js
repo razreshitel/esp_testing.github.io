@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function sendData(data) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "update_todo.php", true);
+    xhr.open("POST", "scripts/update_todo.php", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {

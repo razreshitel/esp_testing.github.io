@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Read the first line from the existing file
-    if (($firstLine = @file('data/to-do.csv', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)[0]) === false) {
+    if (($firstLine = @file('../data/to-do.csv', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)[0]) === false) {
         echo "Error reading the existing file";
         exit;
     }
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Write to the file
-    if (file_put_contents('data/to-do.csv', $fileContent) === false) {
+    if (file_put_contents('../data/to-do.csv', $fileContent) === false) {
         echo "Error writing to the file";
         exit;
     }
