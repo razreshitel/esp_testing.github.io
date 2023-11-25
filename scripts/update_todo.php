@@ -1,7 +1,7 @@
 <?php
 // Function to log messages
 function writeToLog($message) {
-    file_put_contents("log.txt", date("Y-m-d H:i:s") . ": " . $message . "\n", FILE_APPEND);
+    file_put_contents("../log.txt", date("Y-m-d H:i:s") . ": " . $message . "\n", FILE_APPEND);
 }
 
 writeToLog("Request received");
