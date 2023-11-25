@@ -4,7 +4,7 @@ document.getElementById('update-repo-btn').addEventListener('click', function() 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var lastUpdateTime = this.responseText; // Response contains the last update time
-            var password = prompt("Please enter the password:\n" + lastUpdateTime);
+            var password = prompt(lastUpdateTime + "\n\nPlease enter the password:");
             if (password != null) {
                 var updateXhr = new XMLHttpRequest();
                 updateXhr.open("POST", "scripts/update_repo.php", true);
