@@ -1,32 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Comments Page</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sensor Data</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            <h2>Post a Comment</h2>
-            <form id="commentForm" onsubmit="return submitComment();">
-                <input type="text" name="name" placeholder="Your Name" required><br>
-                <textarea name="comment" placeholder="Your Comment" required></textarea><br>
-                <button type="submit">Post Comment</button>
-            </form>
-        </div>
-        <div class="comments-container">
-            <h2>Comments</h2>
-            <div id="commentsList">
-                <!-- Comments will be loaded here -->
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
 
-    <form action="git_pull.php" method="post">
-        Password: <input type="password" name="password">
-        <input type="submit" value="Update Repository">
-    </form>
+<div id="sensor-table-container">
+  <h2>Sensors</h2>
+  <table id="sensor-table">
+    <thead>
+      <tr>
+        <th>Sensor</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Sensor data will be inserted here -->
+    </tbody>
+  </table>
+</div>
 
+<div id="utilities-table-container">
+  <h2>Utilities</h2>
+  <table id="utilities-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Volume</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Utility data will be inserted here -->
+    </tbody>
+  </table>
+</div>
+
+<div id="security-table-container">
+  <h2>Security</h2> <!-- Title for the security table -->
+  <table id="security-table">
+    <thead>
+      <tr>
+        <th>Object</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Security data will be inserted here -->
+    </tbody>
+  </table>
+</div>
+
+<div id="todo-table-container">
+  <table id="todo-table">
+    <thead>
+      <tr>
+        <th>Did?</th>
+        <th>Deadline</th>
+        <th>Описание</th>
+        <th>Комментарий</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- To-do items will be inserted here -->
+    </tbody>
+  </table>
+  <button id="apply-changes">Apply</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

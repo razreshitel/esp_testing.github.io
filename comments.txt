@@ -1,1 +1,0 @@
-<div class='comment'><span class='time' data-name='1313'>20.11.23 23:42</span> <strong class='name'>1313</strong>: <span class='comment-text'>13</span></div>
