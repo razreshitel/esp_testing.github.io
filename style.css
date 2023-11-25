@@ -89,6 +89,12 @@ button:hover {
   color: white;
 }
 
+#git-command-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  /* Add more styling as needed */
+}
 
 #sensor-table, #utilities-table, #security-table, #todo-table {
   width: 100%;

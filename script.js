@@ -99,23 +99,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   // Apply changes button functionality for to-do list
-  document.getElementById('git-button').addEventListener('click', function() {
-    var password = prompt("Please enter the password:");
-    if (password != null) {
-      // Hash the password
-      var hash = CryptoJS.SHA256(password).toString();
-
-      // Send the hash to the server
-      fetch('path_to_your_php_script.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({passwordHash: hash})
-      })
-      .then(response => response.text())
-      .then(data => alert(data))
-      .catch(error => console.error('Error:', error));
-    }
+  document.getElementById('apply-changes').addEventListener('click', function() {
+    var tableData = getTableData();
+    sendData(tableData);
   });
+  
+  
+
 
   // Function to fetch CSV data with a cache-busting URL parameter
   function fetchCSVAndUpdateTable(csvFilePath, tableElementId) {
