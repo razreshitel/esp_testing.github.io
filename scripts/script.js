@@ -1,43 +1,49 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Function to populate a table with CSV data
+  // Function to populate or update a table with CSV data
   function populateTable(csvText, tableElementId) {
-  let rows = csvText.split('\n').map(function(row) {
-    return row.split(',').map(function(field) {
-      // Remove quotes and trim whitespace
-      return field.replace(/(^"|"$)/g, '').trim();
+    let newRows = csvText.split('\n').map(function(row) {
+      return row.split(',').map(function(field) {
+        return field.replace(/(^"|"$)/g, '').trim();
+      });
     });
-  });
 
-  let table = document.getElementById(tableElementId);
-  for (let i = 1; i < rows.length; i++) { // Start from 1 if your CSV has a header row
-    let row = table.insertRow(-1);
-    for (let j = 0; j < rows[i].length; j++) {
-      let cell = row.insertCell(-1);
+    let table = document.getElementById(tableElementId);
+    for (let i = 1; i < newRows.length; i++) { // Assuming the first row is the header
+      let row = table.rows[i] || table.insertRow(-1);
+      for (let j = 0; j < newRows[i].length; j++) {
+        let cell = row.cells[j] || row.insertCell(-1);
 
-      // Create a checkbox for the first column
-      if (j === 0 && tableElementId === 'todo-table') {
-        let checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = rows[i][j].toLowerCase() === 'done';
-        cell.appendChild(checkbox);
-        cell.classList.add('checkbox-cell');
-      } else {
-        cell.textContent = rows[i][j];
-        if (cell.textContent.toLowerCase() === 'open' || cell.textContent.toLowerCase().includes('detected')) {
-          cell.style.backgroundColor = 'red';
-          cell.style.color = 'white';
-        }
+        if (j === 0 && tableElementId === 'todo-table') {
+          let checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.checked = newRows[i][j].toLowerCase() === 'done';
+          cell.innerHTML = ''; // Clear existing content
+          cell.appendChild(checkbox);
+          cell.classList.add('checkbox-cell');
+        } else {
+          if (cell.textContent !== newRows[i][j]) {
+            cell.textContent = newRows[i][j];
+          }
+          if (cell.textContent.toLowerCase() === 'open' || cell.textContent.toLowerCase().includes('detected')) {
+            cell.style.backgroundColor = 'red';
+            cell.style.color = 'white';
+          }
 
-        // Make other cells editable
-        if (tableElementId === 'todo-table' && j !== 0) {
-          makeCellEditable(cell);
+          if (tableElementId === 'todo-table' && j !== 0) {
+            makeCellEditable(cell);
+          }
         }
       }
+      // Remove extra cells if new data has fewer columns
+      while (row.cells.length > newRows[i].length) {
+        row.deleteCell(-1);
+      }
     }
-  }
-
-  // Add a default new row at the end with one checkbox and three empty fields
-  if (tableElementId === 'todo-table') {
+    // Remove extra rows if new data has fewer rows
+    while (table.rows.length > newRows.length) {
+      table.deleteRow(-1);
+    }
+    if (tableElementId === 'todo-table') {
     let defaultRow = table.insertRow(-1);
     for (let i = 0; i < 4; i++) { // Assuming there are 4 columns in total
       let cell = defaultRow.insertCell(-1);
@@ -51,6 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 }
+
+
 
 
   // Function to make a cell editable
@@ -106,65 +114,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to fetch CSV data with a cache-busting URL parameter
   function fetchCSVAndUpdateTable(csvFilePath, tableElementId) {
-  fetch(`${csvFilePath}?_=${new Date().getTime()}`) // Cache-busting query parameter
-    .then(function(response) {
-      return response.text();
-    })
-    .then(function(csvText) {
-      let newRows = csvText.split('\n').map(function(row) {
-        return row.split(',').map(function(field) {
-          return field.replace(/(^"|"$)/g, '').trim();
-        });
+    fetch(`${csvFilePath}?_=${new Date().getTime()}`) // Cache-busting query parameter
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(csvText) {
+        populateTable(csvText, tableElementId); // Use the existing populateTable function
+      })
+      .catch(function(error) {
+        console.error('Error fetching the CSV file:', error);
       });
-
-      let table = document.getElementById(tableElementId);
-      let tbody = table.getElementsByTagName('tbody')[0];
-
-      // Clear the existing rows
-      tbody.innerHTML = '';
-
-      // Repopulate the table with new data
-      for (let i = 1; i < newRows.length; i++) {
-        let row = tbody.insertRow(-1);
-        for (let j = 0; j < newRows[i].length; j++) {
-          let cell = row.insertCell(-1);
-
-          if (j === 0 && tableElementId === 'todo-table') {
-            let checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = newRows[i][j].toLowerCase() === 'done';
-            cell.appendChild(checkbox);
-            cell.classList.add('checkbox-cell');
-          } else {
-            cell.textContent = newRows[i][j];
-            // Additional cell formatting logic here
-          }
-        }
-      }
-
-      // Add a default new row at the end with one checkbox and three empty fields
-      if (tableElementId === 'todo-table') {
-        addDefaultRow(table);
-      }
-    })
-    .catch(function(error) {
-      console.error('Error fetching the CSV file:', error);
-    });
 }
 
-function addDefaultRow(table) {
-  let defaultRow = table.insertRow(-1);
-  for (let i = 0; i < 4; i++) {
-    let cell = defaultRow.insertCell(-1);
-    if (i === 0) {
-      let checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      cell.appendChild(checkbox);
-    } else {
-      makeCellEditable(cell);
-    }
-  }
-}
 
   // Fetch and populate the tables
   fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
