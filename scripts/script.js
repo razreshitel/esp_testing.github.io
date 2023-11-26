@@ -157,5 +157,5 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
         fetchCSVAndUpdateTable('data/utilities.csv', 'utilities-table');
         fetchCSVAndUpdateTable('data/security.csv', 'security-table');
-    }, 2000);
+    }, 1000);
 });
