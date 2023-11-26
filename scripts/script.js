@@ -110,8 +110,37 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(function(response) {
         return response.text();
       })
-      .then(function(text) {
-        populateTable(text, tableElementId);
+      .then(function(csvText) {
+        let newRows = csvText.split('\n').map(function(row) {
+          return row.split(',').map(function(field) {
+            return field.replace(/(^"|"$)/g, '').trim();
+          });
+        });
+
+        let table = document.getElementById(tableElementId);
+        for (let i = 1; i < newRows.length; i++) { // Assuming the first row is the header
+          for (let j = 0; j < newRows[i].length; j++) {
+            // Update only if the cell data has changed
+            if (!table.rows[i] || !table.rows[i].cells[j] || table.rows[i].cells[j].textContent !== newRows[i][j]) {
+              if (!table.rows[i]) {
+                table.insertRow(-1);
+              }
+              if (!table.rows[i].cells[j]) {
+                table.rows[i].insertCell(-1);
+              }
+              table.rows[i].cells[j].textContent = newRows[i][j];
+              // Apply any additional cell formatting or logic here
+            }
+          }
+          // Remove extra cells if new data has fewer columns
+          while (table.rows[i] && table.rows[i].cells.length > newRows[i].length) {
+            table.rows[i].deleteCell(-1);
+          }
+        }
+        // Remove extra rows if new data has fewer rows
+        while (table.rows.length > newRows.length) {
+          table.deleteRow(-1);
+        }
       })
       .catch(function(error) {
         console.error('Error fetching the CSV file:', error);
@@ -123,4 +152,10 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchCSVAndUpdateTable('data/utilities.csv', 'utilities-table');
   fetchCSVAndUpdateTable('data/security.csv', 'security-table');
   fetchCSVAndUpdateTable('data/to-do.csv', 'todo-table'); // Add this line for the to-do list
+
+   setInterval(function() {
+        fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
+        fetchCSVAndUpdateTable('data/utilities.csv', 'utilities-table');
+        fetchCSVAndUpdateTable('data/security.csv', 'security-table');
+    }, 2000);
 });
