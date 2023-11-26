@@ -123,8 +123,4 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchCSVAndUpdateTable('data/utilities.csv', 'utilities-table');
   fetchCSVAndUpdateTable('data/security.csv', 'security-table');
   fetchCSVAndUpdateTable('data/to-do.csv', 'todo-table'); // Add this line for the to-do list
-
-  setInterval(function() {
-        fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
-    }, 3000);
 });
