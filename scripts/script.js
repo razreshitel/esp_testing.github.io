@@ -1,13 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
 
   // Function to fetch and update tables with CSV data
+  var lastFetchedData = {
+    'sensor-table': '',
+    'utilities-table': '',
+    'security-table': '',
+    'todo-table': ''
+  };
+
+  // Function to fetch and update tables with CSV data
   function fetchCSVAndUpdateTable(csvFilePath, tableElementId) {
     fetch(`${csvFilePath}?_=${new Date().getTime()}`) // Cache-busting query parameter
       .then(function(response) {
         return response.text();
       })
       .then(function(csvText) {
-        populateTable(csvText, tableElementId); // Update the table with new data
+        // Update the table only if the data has changed
+        if (lastFetchedData[tableElementId] !== csvText) {
+          populateTable(csvText, tableElementId);
+          lastFetchedData[tableElementId] = csvText; // Update the stored data
+        }
       })
       .catch(function(error) {
         console.error('Error fetching the CSV file:', error);
