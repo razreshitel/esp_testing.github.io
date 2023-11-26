@@ -106,46 +106,65 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to fetch CSV data with a cache-busting URL parameter
   function fetchCSVAndUpdateTable(csvFilePath, tableElementId) {
-    fetch(`${csvFilePath}?_=${new Date().getTime()}`) // Cache-busting query parameter
-      .then(function(response) {
-        return response.text();
-      })
-      .then(function(csvText) {
-        let newRows = csvText.split('\n').map(function(row) {
-          return row.split(',').map(function(field) {
-            return field.replace(/(^"|"$)/g, '').trim();
-          });
+  fetch(`${csvFilePath}?_=${new Date().getTime()}`) // Cache-busting query parameter
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(csvText) {
+      let newRows = csvText.split('\n').map(function(row) {
+        return row.split(',').map(function(field) {
+          return field.replace(/(^"|"$)/g, '').trim();
         });
-
-        let table = document.getElementById(tableElementId);
-        for (let i = 1; i < newRows.length; i++) { // Assuming the first row is the header
-          for (let j = 0; j < newRows[i].length; j++) {
-            // Update only if the cell data has changed
-            if (!table.rows[i] || !table.rows[i].cells[j] || table.rows[i].cells[j].textContent !== newRows[i][j]) {
-              if (!table.rows[i]) {
-                table.insertRow(-1);
-              }
-              if (!table.rows[i].cells[j]) {
-                table.rows[i].insertCell(-1);
-              }
-              table.rows[i].cells[j].textContent = newRows[i][j];
-              // Apply any additional cell formatting or logic here
-            }
-          }
-          // Remove extra cells if new data has fewer columns
-          while (table.rows[i] && table.rows[i].cells.length > newRows[i].length) {
-            table.rows[i].deleteCell(-1);
-          }
-        }
-        // Remove extra rows if new data has fewer rows
-        while (table.rows.length > newRows.length) {
-          table.deleteRow(-1);
-        }
-      })
-      .catch(function(error) {
-        console.error('Error fetching the CSV file:', error);
       });
+
+      let table = document.getElementById(tableElementId);
+      let tbody = table.getElementsByTagName('tbody')[0];
+
+      // Clear the existing rows
+      tbody.innerHTML = '';
+
+      // Repopulate the table with new data
+      for (let i = 1; i < newRows.length; i++) {
+        let row = tbody.insertRow(-1);
+        for (let j = 0; j < newRows[i].length; j++) {
+          let cell = row.insertCell(-1);
+
+          if (j === 0 && tableElementId === 'todo-table') {
+            let checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = newRows[i][j].toLowerCase() === 'done';
+            cell.appendChild(checkbox);
+            cell.classList.add('checkbox-cell');
+          } else {
+            cell.textContent = newRows[i][j];
+            // Additional cell formatting logic here
+          }
+        }
+      }
+
+      // Add a default new row at the end with one checkbox and three empty fields
+      if (tableElementId === 'todo-table') {
+        addDefaultRow(table);
+      }
+    })
+    .catch(function(error) {
+      console.error('Error fetching the CSV file:', error);
+    });
+}
+
+function addDefaultRow(table) {
+  let defaultRow = table.insertRow(-1);
+  for (let i = 0; i < 4; i++) {
+    let cell = defaultRow.insertCell(-1);
+    if (i === 0) {
+      let checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      cell.appendChild(checkbox);
+    } else {
+      makeCellEditable(cell);
+    }
   }
+}
 
   // Fetch and populate the tables
   fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
