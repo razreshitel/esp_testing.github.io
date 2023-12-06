@@ -1,21 +1,14 @@
 @font-face {
   font-family: 'AvantGardeCyrillic';
   src: url('itc-avant-garde-gothic-book-cyrillic.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
 }
 
-/* Reset margins and padding, and set default font */
+/* Reset margins, padding, and set default styles */
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'AvantGardeCyrillic', sans-serif; /* Fallback to sans-serif if AvantGardeCyrillic is not available */
-}
-
-
-body, h1, h2, h3, p {
-  font-family: 'AvantGardeCyrillic', sans-serif;
+  font-family: 'AvantGardeCyrillic', sans-serif; /* Fallback to sans-serif */
 }
 
 body {
@@ -26,7 +19,7 @@ body {
   padding: 20px; /* Padding around the page */
 }
 
-h2, table, #sensor-table-container, #utilities-table-container, #security-table-container {
+h2, table {
   margin: 0;
   padding: 0;
 }
@@ -40,39 +33,35 @@ h2 {
   border-bottom: none;
 }
 
+
 table {
-  background-color: #fff;
   width: 100%;
   border-collapse: collapse;
-  border-top: none;
+  background-color: #fff;
 }
 
 table th, table td {
-  border: 2px solid lightgray;
+  border: 2px solid #ddd;
   padding: 8px;
   text-align: left;
 }
 
-/* Zebra striping for rows */
 tr:nth-child(even) {
   background-color: #f8f8f8;
 }
 
 #todo-table th:first-child, 
 #todo-table td:first-child {
-  width: 50px; /* Set a fixed width for the first column */
-  text-align: center; /* Center align the text and checkbox */
+  width: 50px;
+  text-align: center;
 }
 
-/* Existing styles for checkboxes */
 table input[type="checkbox"] {
   transform: scale(1.5);
 }
 
-
-/* Button styling */
 button {
-  background-color: #007bff; /* Primary button color */
+  background-color: #007bff;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -81,88 +70,71 @@ button {
   display: inline-block;
   font-size: 16px;
   margin: 10px 2px;
-  transition-duration: 0.4s;
+  transition: background-color 0.4s;
   cursor: pointer;
 }
+
 button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
-  color: white;
+  background-color: #0056b3;
 }
 
 #update-repo-btn {
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    width: 50px; /* Square shape */
-    height: 50px;
-    border-radius: 10px; /* Rounded corners */
-    border: none; /* Removes default border */
-    background-color: grey; /* Grey background */
-    padding: 0; /* Removes default padding */
-    cursor: pointer; /* Hand cursor on hover */
-    box-shadow: 4px -4px 8px 2px rgba(0, 0, 0, 0.4); /* Adds shadow */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #D1D5DB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+#update-repo-btn:hover {
+  background-color: #B6BCC3;
 }
 
 #update-repo-btn img {
-    max-width: 80%; /* Limits the size of the icon */
-    max-height: 80%; /* Maintains aspect ratio and limits height */
+  width: 25px;
+  height: auto;
 }
 
 #update-repo-btn .under-button-text {
-    position: absolute;
-    width: max-content; /* Adjust the width based on content */
-    top: 60px; /* Position below the button; adjust as needed */
-    left: 50%; /* Start from the center of the button */
-    transform: translateX(-50%); /* Shift it back to the left by half of its width */
-    color: black;
-    font-size: 18px;
-    text-align: center;
+  display: none;
 }
 
-
-
-#update-repo-btn img {
-    width: 100%; /* Icon takes the full size of the button */
-    height: auto; /* Maintain aspect ratio */
-}
-
-#sensor-table, #utilities-table, #security-table, #todo-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-top: none;
-}
-
-
-#sensor-table-container {
+#update-repo-btn:hover .under-button-text {
+  display: block;
   position: absolute;
-  top: 15%;   /* Adjust if necessary */
-  left: 10%;    /* Adjust to place it to the right of the first table */
-  width: 15%;   /* Adjust width as needed */
+  width: max-content;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #4B5563;
+  font-size: 12px;
+  text-align: center;
 }
 
-#utilities-table-container {
-  position: absolute;
-  top: 15%;   /* Adjust if necessary */
-  left: 25%;  /* Adjust to place it to the right of the first table */
-  width: 20%;   /* Adjust width as needed */
-}
-
-#security-table-container {
-  position: absolute;
-  top: 15%; /* Adjust if necessary */
-  left: 45%; /* Adjust to place it below or to the right as needed */
-  width: 15%; /* Adjust width as needed */
-}
-
+/* Positioning containers */
+#sensor-table-container,
+#utilities-table-container,
+#security-table-container,
 #todo-table-container {
   position: absolute;
+  top: 15%;
+  width: 15%;
+}
+
+#sensor-table-container { left: 10%; width: 15%; }
+#utilities-table-container { left: 25%; width: 20%; }
+#security-table-container { left: 45%; }
+#todo-table-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Aligns the button to the right */
+  align-items: flex-end;
   left: 10%;
   top: 50%;
   width: 50%;
