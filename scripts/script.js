@@ -152,16 +152,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Initial fetch and populate of the tables
-  fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
-  fetchCSVAndUpdateTable('data/utilities.csv', 'utilities-table');
-  fetchCSVAndUpdateTable('data/security.csv', 'security-table');
-  fetchCSVAndUpdateTable('data/to-do.csv', 'todo-table');
+  fetchCSVAndUpdateTable('.data/sensors.csv', 'sensor-table');
+  fetchCSVAndUpdateTable('.data/utilities.csv', 'utilities-table');
+  fetchCSVAndUpdateTable('.data/security.csv', 'security-table');
+  fetchCSVAndUpdateTable('.data/to-do.csv', 'todo-table');
 
   // Refresh the first three tables every 2 seconds
   setInterval(function() {
-    fetchCSVAndUpdateTable('data/sensors.csv', 'sensor-table');
-    fetchCSVAndUpdateTable('data/utilities.csv', 'utilities-table');
-    fetchCSVAndUpdateTable('data/security.csv', 'security-table');
+    fetchCSVAndUpdateTable('.data/sensors.csv', 'sensor-table');
+    fetchCSVAndUpdateTable('.data/utilities.csv', 'utilities-table');
+    fetchCSVAndUpdateTable('.data/security.csv', 'security-table');
   }, 1000);
 
 });
