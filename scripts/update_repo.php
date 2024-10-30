@@ -1,27 +1,37 @@
 <?php
-$stored_hash = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
+// Хеш пароля (замените на свой SHA-256 хеш)
+$storedPasswordHash = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (hash('sha256', $_POST['password']) === $stored_hash) {
-        echo "Starting update...\n";
-        $output = shell_exec('cd /home/pi/github/esp_testing.io && git fetch --all && git reset --hard origin/main && git clean -fd 2>&1');
-        file_put_contents('../../git.log', date("Y-m-d H:i:s") . " - Update executed\n", FILE_APPEND);
-        echo nl2br($output . "\nUpdate completed.");
-    } else {
-        echo "Incorrect Password";
-    }
-} else {
-    $logFilePath = '../../git.log';
+// Путь к файлу log.txt
+$logFilePath = '../log.txt';
+
+// Проверяем, запрашиваются ли только первые 5 строк лога
+if (isset($_GET['getLog']) && $_GET['getLog'] === 'true') {
     if (file_exists($logFilePath)) {
-        $fileLines = file($logFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        if ($fileLines) {
-            $lastLine = end($fileLines);
-            echo $lastLine;
-        } else {
-            echo "No update information available.";
-        }
+        $logFile = file($logFilePath);
+        $firstFiveLines = array_slice($logFile, 0, 5);
+        echo implode("", $firstFiveLines);
     } else {
-        echo "Log file not found.";
+        echo "Файл log.txt не найден.";
     }
+    exit;
+}
+
+// Проверка пароля при POST-запросе
+$inputPassword = isset($_POST['password']) ? hash('sha256', $_POST['password']) : '';
+
+if ($inputPassword !== $storedPasswordHash) {
+    echo "Неверный пароль.";
+    exit;
+}
+
+// Обновление репозитория
+echo "Пароль верен. Обновляем репозиторий...\n";
+exec("git fetch --all && git reset --hard origin/main 2>&1", $output, $returnCode);
+
+if ($returnCode === 0) {
+    echo "Репозиторий успешно обновлен.";
+} else {
+    echo "Ошибка при обновлении репозитория:\n" . implode("\n", $output);
 }
 ?>

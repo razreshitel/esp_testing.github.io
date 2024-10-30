@@ -1,22 +1,29 @@
-document.getElementById('update-repo-btn').addEventListener('click', function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "scripts/update_repo.php", true); // Request to get the last update time
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var lastUpdateTime = this.responseText; // Response contains the last update time
-            var password = prompt(lastUpdateTime + "\n\nPlease enter the password:");
-            if (password != null) {
-                var updateXhr = new XMLHttpRequest();
-                updateXhr.open("POST", "scripts/update_repo.php", true);
-                updateXhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                updateXhr.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        alert(this.responseText);
-                    }
-                };
-                updateXhr.send("password=" + password);
-            }
+// Обработчик для кнопки
+document.getElementById('updateButton').addEventListener('click', async () => {
+    try {
+        // Сначала запросим первые 5 строк из log.txt
+        const logResponse = await fetch('update_repo.php?getLog=true');
+        const logText = await logResponse.text();
+
+        // Показываем пользователю первые 5 строк лога
+        alert("Первые 5 строк из log.txt:\n" + logText);
+
+        // Запрашиваем у пользователя пароль
+        const password = prompt("Введите пароль для обновления:");
+
+        if (password) {
+            // Отправляем запрос на сервер с паролем
+            const response = await fetch('update_repo.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'password=' + encodeURIComponent(password)
+            });
+
+            const result = await response.text();
+            alert(result);
         }
-    };
-    xhr.send();
+    } catch (error) {
+        console.error("Ошибка при отправке запроса:", error);
+        alert("Произошла ошибка. Попробуйте снова.");
+    }
 });
